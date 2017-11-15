@@ -1,6 +1,6 @@
-class Movie:
-    def __init__(self, title, price, score, year, actor_list, mid=0):
-        self.__mid = mid
+class Movie(object):
+    def __init__(self, title, price, score, year, actor_list, movie_id=0):
+        self.__id = movie_id
         self.__title = title
         self.__price = price
         self.__score = score
@@ -8,11 +8,11 @@ class Movie:
         self.__actor_list = actor_list
 
     def __str__(self):
-        return 'Movie{ID: ' + str(self.mid) + ', Title: ' + self.title + ', Price: ' + str(self.price) \
-               + ', Score: ' + str(self.score) + '}'
+        return 'Movie{ID: ' + str(self.__id) + ', Title: ' + self.__title + ', Price: ' + str(self.__price) \
+               + ', Score: ' + str(self.__score) + '}'
 
-    def get_mid(self):
-        return self.__mid
+    def get_id(self):
+        return self.__id
 
     def get_title(self):
         return self.__title

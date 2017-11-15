@@ -1,15 +1,22 @@
-class Order:
-    def __init__(self, uid, price, movie_list):
-        self.__uid = uid
+class Order(object):
+    def __init__(self, user_id, movie_list, order_id=0):
+        self.__user_id = user_id
         self.__price = self.__calculate_price(movie_list)
         self.__movie_list = movie_list
+        self.__id = order_id
 
     def __str__(self):
-        return 'Order{ID: ' + str(self.__uid) + ', Price: ' + str(self.__price) \
-               + ', Movies: ' + self.__movie_list + '}'
+        return 'Order{ID: ' + str(self.__id) + ', User ID: ' + str(self.__user_id) + ', Movies: ' + str(
+            len(self.__movie_list)) + ', Price: ' + str(self.__price) + '}'
 
-    def get_uid(self):
-        return self.__uid
+    def get_id(self):
+        return self.__id
+
+    def get_user_id(self):
+        return self.__user_id
+
+    def set_user_id(self, user_id):
+        self.__user_id = user_id
 
     def get_price(self):
         return self.__price
@@ -32,5 +39,5 @@ class Order:
         """
         price = 0
         for movie in movies:
-            price += float(movie["price"])
+            price += float(movie.get_price())
         return price

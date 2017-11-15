@@ -1,26 +1,25 @@
-class User:
-    def __init__(self, first_name, last_name, order_ids, uid=0):
+class User(object):
+    def __init__(self, first_name, last_name, user_id=0):
         """
         The default constructor for the User class.
-        :param uid: User ID.
+        :param user_id: User ID.
         :param first_name: First name of the user.
         :param last_name: Last name of the user.
-        :param order_ids: A list that contains all the orders ids of this user.
         """
-        self.__uid = uid
+        self.__id = user_id
         self.__first_name = first_name.title()
         self.__last_name = last_name.title()
-        self.__order_ids = order_ids
+        self.__order_ids = []
 
     def __str__(self):
         """
         This method overrides the basic __str__ method and returns a human readable string.
         :return: The string representation of this user class.
         """
-        return 'User{ID: ' + str(self.__uid) + ', Name: ' + self.__first_name + ' ' + self.__last_name + '}'
+        return 'User{ID: ' + str(self.__id) + ', Name: ' + self.__first_name + ' ' + self.__last_name + '}'
 
-    def get_uid(self):
-        return self.__uid
+    def get_id(self):
+        return self.__id
 
     def get_first_name(self):
         return self.__first_name
@@ -39,11 +38,3 @@ class User:
 
     def set_order_ids(self, order_ids):
         self.__order_ids = order_ids
-
-
-
-
-u = User("Pop", "Iosif", [])
-
-print(u)
-
