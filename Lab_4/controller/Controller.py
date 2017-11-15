@@ -2,16 +2,31 @@ from repository import Repositories
 
 
 class Controller:
+    """
+    This class contains last functionality that our application requires.
+    (e.g. filters, searching for specific fields, etc)
+    """
     def __init__(self) -> None:
+        """
+        The default constructor for the Controller class that contains the initialization of the repositories.
+        """
         self.repositories = Repositories.Repositories()
 
     def find_users_by_first_name(self, first_name):
+        """
+        This method will iterate the user repository and search for all the users that have received first name.
+        :return: An user list that contains all the users with the received first name.
+        """
         users = []
         for user in self.repositories.user_repository.get_all():
             if user.get_first_name() == first_name:
                 users.append(user)
 
     def find_users_by_last_name(self, last_name):
+        """
+        This method will iterate the user repository and search for all the users that have received last name.
+        :return: An user list that contains all the users with the received last name.
+        """
         users = []
         for user in self.repositories.user_repository.get_all():
             if user.get_last_name() == last_name:
@@ -20,12 +35,23 @@ class Controller:
 
     @staticmethod
     def __filter_list_by_actor(actor_name, actor_list):
+        """
+        This method will search in the received actor list an actor by name.
+        :param actor_list: Actor list for the search.
+        :param actor_name: Actor name for the search.
+        :return: True if the actor is in that list, otherwise False.
+       """
         for name in actor_list:
             if actor_name == name or actor_name in name:
                 return True
         return False
 
     def filter_movies_by_actor(self, actor_name):
+        """
+        This method will filter the movie repository by an specific actor name.
+        :param actor_name: Received actor name for the filtering.
+        :return: All movies that contains in their actor list that specific actor.
+        """
         movies = []
         for movie in self.repositories.movie_repository.get_all():
             if self.__filter_list_by_actor(actor_name, movie.get_actor_list()):
@@ -33,6 +59,11 @@ class Controller:
         return movies
 
     def filter_movies_by_score(self, score):
+        """
+        This method will filter the movie repository by a specific score.
+        :param score: Received score for the filtering.
+        :return: All movies that have a better score than the specific score.
+        """
         movies = []
         for movie in self.repositories.movie_repository.get_all():
             if movie.get_score() > int(score):
@@ -40,6 +71,12 @@ class Controller:
         return movies
 
     def get_movies_by_ids(self, movie_ids):
+        """
+        This method will iterate the movie repository, and add every movie that matches an id from the received
+        movie ids list.
+        :param movie_ids: A list that contains ids of movies.
+        :return: A list that contains all movies with an id that is present in movie_ids list.
+        """
         movies = []
         for movie_id in movie_ids:
             movie = self.repositories.movie_repository.find_by_id(movie_id)
@@ -49,6 +86,9 @@ class Controller:
 
 
 class Validator:
+    """
+    This class contains all the validations for the UI layer of the application.
+    """
     @staticmethod
     def check_int(number):
         """

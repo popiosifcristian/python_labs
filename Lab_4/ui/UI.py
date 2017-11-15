@@ -4,7 +4,13 @@ from domain import User, Movie, Order
 
 
 class UI:
+    """
+    This class contains the UI of the application.
+    """
     def __init__(self):
+        """
+        The default constructor that contains the initialization of the controller and of the validator.
+        """
         self.__controller = Controller.Controller()
         self.__validator = Controller.Validator()
         self.__user_id_index = 2

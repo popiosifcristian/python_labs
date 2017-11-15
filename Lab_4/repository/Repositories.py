@@ -3,13 +3,23 @@ from domain import User, Movie, Order
 
 
 class Repositories:
+    """
+    This class contains all the repositories and the initialization with some objects of the repositories.
+    """
     def __init__(self):
+        """
+        The default constructor of the Repositories class that contains the initialization of repositories and
+        stockpiling of some objects.
+        """
         self.user_repository = AbstractRepository.AbstractRepository()
         self.movie_repository = AbstractRepository.AbstractRepository()
         self.order_repository = AbstractRepository.AbstractRepository()
         self.initialize_repositories()
 
     def initialize_repositories(self):
+        """
+        This method initialize the repositories with some objects.
+        """
         movie_1 = Movie.Movie("Pirates Of The Caribbean", 100, 9, 2017,
                               ['Johnny Depp', 'Kevin Mcnally', 'Orlando Bloom'], 1)
         movie_2 = Movie.Movie("Fast & Furious", 90, 8, 2016, ['Vin Diesel', 'Eva Mendes', 'Paul Walker'], 2)
