@@ -15,6 +15,22 @@ class Order(object):
         self.__movie_list = movie_list
         self.__id = order_id
 
+    def __attrs(self):
+        """
+        This method returns the attributes of this instance of Order class.
+        :return: ID, user ID, movie list, order id.
+        """
+        return self.__user_id, self.__price, self.__movie_list, self.__id
+
+    def __eq__(self, other):
+        """
+        This method overrides the basic __eq__ methods and verify if the received object is equal to this instance
+        of Order class.
+        :param other: Other object to be verified.
+        :return: True if the received object is equal with this movie, otherwise False.
+        """
+        return isinstance(other, Order) and self.__attrs() == other.__attrs()
+
     def __str__(self):
         """
         This method overrides the basic __str__ method and returns a human readable string.

@@ -6,6 +6,7 @@ class Controller:
     This class contains last functionality that our application requires.
     (e.g. filters, searching for specific fields, etc)
     """
+
     def __init__(self) -> None:
         """
         The default constructor for the Controller class that contains the initialization of the repositories.
@@ -21,6 +22,7 @@ class Controller:
         for user in self.repositories.user_repository.get_all():
             if user.get_first_name() == first_name:
                 users.append(user)
+        return users
 
     def find_users_by_last_name(self, last_name):
         """
@@ -41,9 +43,10 @@ class Controller:
         :param actor_name: Actor name for the search.
         :return: True if the actor is in that list, otherwise False.
        """
-        for name in actor_list:
-            if actor_name == name or actor_name in name:
-                return True
+        if actor_name is not None:
+            for name in actor_list:
+                if actor_name == name or actor_name in name:
+                    return True
         return False
 
     def filter_movies_by_actor(self, actor_name):
@@ -89,6 +92,7 @@ class Validator:
     """
     This class contains all the validations for the UI layer of the application.
     """
+
     @staticmethod
     def check_int(number):
         """

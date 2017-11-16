@@ -20,6 +20,22 @@ class Movie(object):
         self.__year = year
         self.__actor_list = actor_list
 
+    def __attrs(self):
+        """
+        This method returns the attributes of this instance of Movie class.
+        :return: ID, title, price, score, year, actor list.
+        """
+        return self.__id, self.__title, self.__price, self.__score, self.__year, self.__actor_list
+
+    def __eq__(self, other):
+        """
+        This method overrides the basic __eq__ methods and verify if the received object is equal to this instance
+        of Movie class.
+        :param other: Other object to be verified.
+        :return: True if the received object is equal with this movie, otherwise False.
+        """
+        return isinstance(other, Movie) and self.__attrs() == other.__attrs()
+
     def __str__(self):
         """
         This method overrides the basic __str__ method and returns a human readable string.

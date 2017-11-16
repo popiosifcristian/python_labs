@@ -14,6 +14,22 @@ class User(object):
         self.__first_name = first_name.title()
         self.__last_name = last_name.title()
 
+    def __attrs(self):
+        """
+        This method returns the attributes of this instance of User class.
+        :return: ID, first name and last name of this user.
+        """
+        return self.__id, self.__first_name, self.__last_name
+
+    def __eq__(self, other):
+        """
+        This method overrides the basic __eq__ methods and verify if the received object is equal to this instance
+        of User class.
+        :param other: Other object to be verified.
+        :return: True if the received object is equal with this user, otherwise False.
+        """
+        return isinstance(other, User) and self.__attrs() == other.__attrs()
+
     def __str__(self):
         """
         This method overrides the basic __str__ method and returns a human readable string.

@@ -32,7 +32,7 @@ class AbstractRepository(object):
         """
         position = 0
         for item in self.__other_list:
-            if item.get_id == other.get_id:
+            if item.get_id() == other.get_id():
                 break
             position += 1
         self.__other_list[position] = other
