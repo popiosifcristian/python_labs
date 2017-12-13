@@ -14,9 +14,9 @@ class UI:
         """
         self.__controller = Controller.Controller()
         self.__validator = Controller.Validator()
-        self.__user_id_index = 2
-        self.__movie_id_index = 2
-        self.__order_id_index = 2
+        self.__user_id_index = len(self.__controller.repositories.user_repository.get_all())
+        self.__movie_id_index = len(self.__controller.repositories.movie_repository.get_all())
+        self.__order_id_index = len(self.__controller.repositories.order_repository.get_all())
 
     __menu_variables = [
         "    ~~~Main Menu~~~ \n"
@@ -66,6 +66,7 @@ class UI:
                 self.__customer_menu()
                 break
             if _choice == 0:
+                self.__controller.update_repositories()
                 sys.exit(0)
 
     def __user_menu(self):
@@ -86,6 +87,7 @@ class UI:
                 self.main_menu()
                 break
             elif _choice == 0:
+                self.__controller.update_repositories()
                 sys.exit(0)
             else:
                 print("Invalid option.")
@@ -108,6 +110,7 @@ class UI:
                 self.main_menu()
                 break
             elif _choice == 0:
+                self.__controller.update_repositories()
                 sys.exit(0)
             else:
                 print("Invalid option.")
@@ -131,6 +134,7 @@ class UI:
                 break
 
             elif _choice == 0:
+                self.__controller.update_repositories()
                 sys.exit(0)
 
             else:
@@ -224,11 +228,13 @@ class UI:
             print(movie)
 
     def __add_order(self):
+        self.__print_users()
         user_id = input("ID of the user for the order: ")
         user_id = self.__validator.validate_int(user_id)
         user = self.__controller.repositories.user_repository.find_by_id(user_id)
         if user is not None:
             movies_ids = []
+            self.__print_movies()
             print("How many movies do you want to order?")
             no_of_movies = input("Type your answer here: ")
             no_of_movies = self.__validator.validate_int(no_of_movies)
@@ -237,8 +243,10 @@ class UI:
                 movie_id = self.__validator.validate_int(movie_id)
                 movies_ids.append(movie_id)
             ordered_movies = self.__controller.get_movies_by_ids(movies_ids)
+            ordered_movies_titles = self.__controller.get_titles_from_movies(ordered_movies)
             self.__order_id_index += 1
-            order = Order.Order(user.get_id(), ordered_movies, self.__order_id_index)
+            price = self.__controller.calculate_price(ordered_movies)
+            order = Order.Order(user.get_id(), price, ordered_movies_titles, self.__order_id_index)
             self.__controller.repositories.order_repository.add(order)
 
     def __filter_movies_by_actor(self):
