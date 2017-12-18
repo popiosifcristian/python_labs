@@ -1,4 +1,4 @@
-from Domain import Word,Phrase
+from Domain import Word, Phrase
 
 
 class WordFileService:
@@ -48,7 +48,7 @@ class PhraseFileService:
         try:
             f = open("phrases.txt", "w")
             for phrase in phrase_list:
-                f.write(phrase.get_phrase() + ". \n")
+                f.write(phrase.get_phrase() + " \n")
             f.close()
         except Exception:
             print("Could not save file")
@@ -65,7 +65,7 @@ class PhraseFileService:
             for line in f.readlines():
                 split_line = line.split(".")
                 phrase = Phrase.Phrase()
-                phrase.set_phrase(split_line[0])
+                phrase.set_phrase(split_line[0][0:-2])
                 phrases_list.append(phrase)
             f.close()
         except Exception:

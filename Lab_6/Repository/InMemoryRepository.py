@@ -4,19 +4,21 @@ from Repository import AbstractRepository, FileService
 
 class Repositories:
     def __init__(self):
-        self.words = AbstractRepository.AbstractRepository()
+        self.nouns = AbstractRepository.AbstractRepository()
+        self.adjectives = AbstractRepository.AbstractRepository()
+        self.verbs = AbstractRepository.AbstractRepository()
         self.phrases = AbstractRepository.AbstractRepository()
         self.__initialize_repositories()
 
     def __initialize_repositories(self):
         noun_list = FileService.WordFileService.read_words(WordType.NOUN)
         for word in noun_list:
-            self.words.add(word)
+            self.nouns.add(word)
         verb_list = FileService.WordFileService.read_words(WordType.VERB)
         for word in verb_list:
-            self.words.add(word)
+            self.verbs.add(word)
         adjective_list = FileService.WordFileService.read_words(WordType.ADJECTIVE)
         for word in adjective_list:
-            self.words.add(word)
+            self.adjectives.add(word)
 
 

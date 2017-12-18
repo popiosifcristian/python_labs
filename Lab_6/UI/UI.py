@@ -40,7 +40,7 @@ class UI:
         check = self.__controller.generate_phrases(no_of_phrases)
         if check is True:
             for phrase in self.__controller.repo.phrases.get_all():
-                print(phrase.get_phrase(), ".")
+                print(phrase.get_phrase())
         else:
             print("No words found for the creation of phrases.")
 

@@ -15,16 +15,42 @@ class Controller:
         :param no_of_phrases: Specific no of phrases.
         :return: True if there are more than 4 words to generate the phrase otherwise False.
         """
-        words = self.repo.words.get_all()
-        if len(words) > 4:
+        nouns = self.repo.nouns.get_all()
+        verbs = self.repo.verbs.get_all()
+        adjectives = self.repo.adjectives.get_all()
+        if len(nouns) > 0 and len(verbs) > 0 and len(adjectives) > 0:
             for index in range(no_of_phrases):
                 phrase = Phrase()
-                random_no_of_words = randint(3, 4)
-                for random_word_index in range(random_no_of_words):
-                    random_index = randint(0, len(words) - 1)
-                    random_word = words[random_index]
-                    phrase.add_word(random_word)
+
+                random_nouns_index = randint(0, len(nouns) - 1)
+                random_verbs_index = randint(0, len(verbs) - 1)
+                random_adjectives_index = randint(0, len(adjectives) - 1)
+                random_noun = nouns[random_nouns_index]
+                random_verb = verbs[random_verbs_index]
+                random_adjective = adjectives[random_adjectives_index]
+                phrase.add_word(random_noun)
+                phrase.add_word(random_verb)
+                phrase.add_word(random_adjective)
+
+                random_no_of_words = randint(0, 2)
+                if random_no_of_words > 0:
+                    for random_word_index in range(random_no_of_words):
+                        random_word_type = randint(1, 3)
+                        if random_word_type == 1:
+                            random_nouns_index = randint(0, len(nouns) - 1)
+                            random_noun = nouns[random_nouns_index]
+                            phrase.add_word(random_noun)
+                        elif random_word_type == 2:
+                            random_verbs_index = randint(0, len(verbs) - 1)
+                            random_verb = verbs[random_verbs_index]
+                            phrase.add_word(random_verb)
+                        else:
+                            random_adjectives_index = randint(0, len(adjectives) - 1)
+                            random_adjective = adjectives[random_adjectives_index]
+                            phrase.add_word(random_adjective)
+                phrase.shuffle_phrase()
                 self.repo.phrases.add(phrase)
+
             PhraseFileService.write_phrases(self.repo.phrases.get_all())
             return True
         else:
@@ -77,14 +103,34 @@ class Controller:
         :return: True if there is any word stored, otherwise False.
         """
         report_list = []
-        if self.repo.words.get_all() > 0:
-            for word in self.repo.words.get_all():
+
+        if len(self.repo.nouns.get_all()) > 0:
+            for word in self.repo.nouns.get_all():
                 no_of_appearances = 0
                 for phrase in self.repo.phrases.get_all():
                     no_of_appearances += self.word_in_list(word.get_value(), phrase.get_words())
                 appearance_word_report = word.get_value() + " - " + str(
                     no_of_appearances) + " appearances - " + word.get_type().value + ";"
                 report_list.append(appearance_word_report)
+
+        if len(self.repo.verbs.get_all()) > 0:
+            for word in self.repo.verbs.get_all():
+                no_of_appearances = 0
+                for phrase in self.repo.phrases.get_all():
+                    no_of_appearances += self.word_in_list(word.get_value(), phrase.get_words())
+                appearance_word_report = word.get_value() + " - " + str(
+                    no_of_appearances) + " appearances - " + word.get_type().value + ";"
+                report_list.append(appearance_word_report)
+
+        if len(self.repo.adjectives.get_all()) > 0:
+            for word in self.repo.adjectives.get_all():
+                no_of_appearances = 0
+                for phrase in self.repo.phrases.get_all():
+                    no_of_appearances += self.word_in_list(word.get_value(), phrase.get_words())
+                appearance_word_report = word.get_value() + " - " + str(
+                    no_of_appearances) + " appearances - " + word.get_type().value + ";"
+                report_list.append(appearance_word_report)
+
             FileService.ReportFileService.write_reports(report_list)
             return True
         else:

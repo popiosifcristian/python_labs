@@ -1,3 +1,6 @@
+from random import shuffle
+
+
 class Phrase(object):
     def __init__(self):
         self.__words = []
@@ -40,6 +43,13 @@ class Phrase(object):
         """
         return self.__words
 
+    def set_words(self, words):
+        """
+        Setter for words propriety.
+        :param words: The new words list to be set.
+        """
+        self.__words = words
+
     def get_phrase(self):
         """
         Getter for phrase propriety.
@@ -64,3 +74,14 @@ class Phrase(object):
         else:
             self.__phrase = self.__phrase + " " + word.get_value()
         self.__words.append(word)
+
+    def shuffle_phrase(self):
+        new_phrase = ""
+        shuffle(self.__words)
+        for index in range(len(self.__words)):
+            if index == 0:
+                new_phrase = new_phrase + self.__words[index].get_value().title()
+            else:
+                new_phrase = new_phrase + " " + self.__words[index].get_value()
+        new_phrase = new_phrase + "."
+        self.__phrase = new_phrase
