@@ -156,6 +156,13 @@ class Controller:
 
     @staticmethod
     def check_similarity(phrase, magic_phrase):
+        """
+        This method will check if received phrase is similar with received magic phrase.
+        For this it will check all the words with their values from the same index.
+        :param phrase: Received phrase to be checked.
+        :param magic_phrase: Received magic phrase for the check.
+        :return: True if the phrases are similar, otherwise false.
+        """
         for index in range(len(phrase.get_words())):
             if phrase.get_words()[index].get_value() != magic_phrase.get_words()[index].get_value():
                 return False
@@ -163,6 +170,13 @@ class Controller:
 
     @staticmethod
     def get_similarity_report(phrase, magic_phrase):
+        """
+        This method will return the similarity report dictionary.
+        Will check the percentage of similarity and the similar words count.
+        :param phrase: Received phrase to be checked.
+        :param magic_phrase: Received magic phrase for the similarity report.
+        :return: A dictionary that contains the phrase, the magic phrase, the percentage and the similarity words count.
+        """
         similarity_count = 0
         for word in phrase.get_words():
             for magic_word in magic_phrase.get_words():
@@ -174,6 +188,11 @@ class Controller:
         return similarity_dictionary
 
     def calculate_similarity_reports(self):
+        """
+        This method will calculate the similarity report for every phrase from the repo with every magic phrase from
+        the repo.
+        :return: A list of report dictionaries that have percentage of similarity higher than 0.
+        """
         similarity_reports = []
         magic_phrases = self.repo.magic_phrases.get_all()
         phrases = self.repo.phrases.get_all()
@@ -187,6 +206,10 @@ class Controller:
         return similarity_reports
 
     def get_similar_phrases(self):
+        """
+        This method will get all phrases that are similar to a magic phrase.
+        :return: A dictionary that contains the phrase and the line from the file.
+        """
         similar_phrases = []
         magic_phrases = self.repo.magic_phrases.get_all()
         phrases = self.repo.phrases.get_all()
@@ -199,10 +222,14 @@ class Controller:
         return similar_phrases
 
     def update_magic_phrases(self):
+        """
+        This method will update the in memory magic phrase repository from the magic_phrase.txt
+        """
         self.repo.magic_phrases = AbstractRepository.AbstractRepository()
         magic_phrases = FileService.MagicPhrasesFileService.read_phrases()
         for magic_phrase in magic_phrases:
             self.repo.magic_phrases.add(magic_phrase)
+        print("In Memory magic phrase repository updated from the magic_phrase.txt file.")
 
 
 class Validator(object):
